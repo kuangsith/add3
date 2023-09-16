@@ -61,6 +61,22 @@ function checkAnswer(event) {
 
     const resultText = document.getElementById("resultText");
     const resultImage = document.getElementById("resultImage");
+    const playerChoiceElem = document.getElementById("playerChoice");
+    const actualAnswerElem = document.getElementById("actualAnswer");
+
+    // Update player's choice color and text
+    playerChoiceElem.textContent = playerChoice;
+    if (playerChoice === correctAnswer) {
+        playerChoiceElem.classList.add("correctChoice");
+        playerChoiceElem.classList.remove("incorrectChoice");
+    } else {
+        playerChoiceElem.classList.add("incorrectChoice");
+        playerChoiceElem.classList.remove("correctChoice");
+    }
+
+    // Update the actual answer text
+    const questionText = document.getElementById("question").textContent;
+    actualAnswerElem.textContent = `${questionText} = ${correctAnswer}`;
 
     if (playerChoice === correctAnswer) {
         resultText.textContent = "Correct";
@@ -72,3 +88,4 @@ function checkAnswer(event) {
         resultImage.src = "wrong.jpg";
     }
 }
+

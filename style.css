@@ -12,6 +12,8 @@ h1{
     text-align: center;
 }
 
+
+
 .hidden {
     display: none;
     align-items: center;
@@ -61,3 +63,15 @@ h1{
     text-align: center;
 }
 
+.correctChoice {
+    color: green;
+}
+
+.incorrectChoice {
+    color: red;
+}
+
+#playerAnswer,
+#actualAnswer {
+    text-align: center;
+}
