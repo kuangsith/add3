@@ -5,6 +5,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    flex-direction: column;  /* this will stack child elements vertically */
 }
 
 .hidden {
@@ -44,9 +45,12 @@ body {
 
 #resultText {
     color: green; /* Default color, will be changed by JavaScript */
+    align-items: center;
 }
 
 #resultImage {
     width: 200px;
     height: 200px;
+    align-items: center;
 }
+

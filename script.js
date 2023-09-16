@@ -16,9 +16,10 @@ function showQuestion() {
     correctAnswer = Math.floor(Math.random() * 11) + 9;
 
     // Randomly pick x and y based on the correctAnswer
-    const x = Math.floor(Math.random() * (correctAnswer - 1)) + 1;
-    const y = Math.floor(Math.random() * (correctAnswer - x - 1)) + 1;
+    const x = Math.floor(Math.random() * (correctAnswer - 3)) + 1;
+    const y = Math.floor(Math.random() * (correctAnswer - x - 2)) + 1;
     const z = correctAnswer - x - y;
+    
 
     document.getElementById("question").textContent = `${x} + ${y} + ${z}`;
 
@@ -34,19 +35,22 @@ function showQuestion() {
 function generateChoices(correct) {
     const choices = new Set();
 
-    while (choices.size < 3) { // Generate only 3 choices first
-        let randomChoice = Math.floor(Math.random() * 11) + 9; // Choices between 9 to 19
+    while (choices.size < 3) {
+        let randomChoice = Math.floor(Math.random() * 11) + 9;
         if (randomChoice !== correct) {
             choices.add(randomChoice);
         }
     }
 
     const choicesArray = Array.from(choices);
-    const correctPos = Math.floor(Math.random() * 4); // Random position for correct answer
+    const correctPos = Math.floor(Math.random() * 4);
 
-    choicesArray.splice(correctPos, 0, correct); // Insert the correct answer at the random position
-    return choicesArray;
+    choicesArray.splice(correctPos, 0, correct);
+    
+    // Sort the choices
+    return choicesArray.sort((a, b) => a - b);
 }
+
 
 
 function checkAnswer(event) {
