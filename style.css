@@ -8,8 +8,13 @@ body {
     flex-direction: column;  /* this will stack child elements vertically */
 }
 
+h1{
+    text-align: center;
+}
+
 .hidden {
     display: none;
+    align-items: center;
 }
 
 .choiceBtn {
@@ -36,6 +41,8 @@ body {
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    display: block;
+    margin: auto;
 }
 
 #startGameButton:hover,
@@ -45,12 +52,12 @@ body {
 
 #resultText {
     color: green; /* Default color, will be changed by JavaScript */
-    align-items: center;
+    text-align: center;
 }
 
 #resultImage {
     width: 200px;
     height: 200px;
-    align-items: center;
+    text-align: center;
 }
 
