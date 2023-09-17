@@ -3,6 +3,9 @@ document.getElementById("newQuestionButton").addEventListener("click", showQuest
 
 let correctAnswer;
 
+const correctImages = ["correct/correct1.jpg", "correct/correct2.jpg", "correct/correct3.jpg", "correct/correct4.jpg"];
+const incorrectImages = ["wrong/wrong1.jpg", "wrong/wrong2.jpg", "wrong/wrong3.jpg", "wrong/wrong4.jpg"];
+
 function startGame() {
     document.getElementById("startGameSection").classList.add("hidden");
     showQuestion();
@@ -53,6 +56,11 @@ function generateChoices(correct) {
 
 
 
+function getRandomImage(imagesArray) {
+    const randomIndex = Math.floor(Math.random() * imagesArray.length);
+    return imagesArray[randomIndex];
+}
+
 function checkAnswer(event) {
     const playerChoice = parseInt(event.target.textContent);
 
@@ -81,11 +89,11 @@ function checkAnswer(event) {
     if (playerChoice === correctAnswer) {
         resultText.textContent = "Correct";
         resultText.style.color = "green";
-        resultImage.src = "correct.jpg";
+        resultImage.src = getRandomImage(correctImages);  // Use random correct image
     } else {
         resultText.textContent = "Incorrect";
         resultText.style.color = "red";
-        resultImage.src = "wrong.jpg";
+        resultImage.src = getRandomImage(incorrectImages);  // Use random incorrect image
     }
 }
 
