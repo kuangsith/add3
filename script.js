@@ -1,77 +1,93 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #FFEEF0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    flex-direction: column;  /* this will stack child elements vertically */
+document.getElementById("startGameButton").addEventListener("click", startGame);
+document.getElementById("newQuestionButton").addEventListener("click", showQuestion);
+
+let correctAnswer;
+
+function startGame() {
+    document.getElementById("startGameSection").classList.add("hidden");
+    showQuestion();
 }
 
-h1{
-    text-align: center;
+function showQuestion() {
+    document.getElementById("resultSection").classList.add("hidden");
+    document.getElementById("questionSection").classList.remove("hidden");
+
+    // Randomly pick the answer between 9 and 19
+    correctAnswer = Math.floor(Math.random() * 11) + 9;
+
+    // Randomly pick x and y based on the correctAnswer
+    const x = Math.floor(Math.random() * (correctAnswer - 3)) + 1;
+    const y = Math.floor(Math.random() * (correctAnswer - x - 2)) + 1;
+    const z = correctAnswer - x - y;
+    
+
+    document.getElementById("question").textContent = `${x} + ${y} + ${z}`;
+
+    const choices = generateChoices(correctAnswer);
+    const choiceButtons = document.querySelectorAll(".choiceBtn");
+    choiceButtons.forEach((btn, index) => {
+        btn.textContent = choices[index];
+        btn.addEventListener("click", checkAnswer);
+    });
+}
+
+
+function generateChoices(correct) {
+    const choices = new Set();
+
+    while (choices.size < 3) {
+        let randomChoice = Math.floor(Math.random() * 11) + 9;
+        if (randomChoice !== correct) {
+            choices.add(randomChoice);
+        }
+    }
+
+    const choicesArray = Array.from(choices);
+    const correctPos = Math.floor(Math.random() * 4);
+
+    choicesArray.splice(correctPos, 0, correct);
+    
+    // Sort the choices
+    return choicesArray.sort((a, b) => a - b);
 }
 
 
 
-.hidden {
-    display: none;
-    align-items: center;
+function checkAnswer(event) {
+    const playerChoice = parseInt(event.target.textContent);
+
+    document.getElementById("questionSection").classList.add("hidden");
+    document.getElementById("resultSection").classList.remove("hidden");
+
+    const resultText = document.getElementById("resultText");
+    const resultImage = document.getElementById("resultImage");
+    const playerChoiceElem = document.getElementById("playerChoice");
+    const actualAnswerElem = document.getElementById("actualAnswer");
+
+    // Update player's choice color and text
+    playerChoiceElem.textContent = playerChoice;
+    if (playerChoice === correctAnswer) {
+        playerChoiceElem.classList.add("correctChoice");
+        playerChoiceElem.classList.remove("incorrectChoice");
+    } else {
+        playerChoiceElem.classList.add("incorrectChoice");
+        playerChoiceElem.classList.remove("correctChoice");
+    }
+
+    // Update the actual answer text
+    const questionText = document.getElementById("question").textContent;
+    actualAnswerElem.textContent = `${questionText} = ${correctAnswer}`;
+
+    if (playerChoice === correctAnswer) {
+        resultText.textContent = "Correct";
+        resultText.style.color = "green";
+        resultImage.src = "correct.jpg";
+    } else {
+        resultText.textContent = "Incorrect";
+        resultText.style.color = "red";
+        resultImage.src = "wrong.jpg";
+    }
 }
 
-.choiceBtn {
-    font-size: 24px;
-    background-color: #FFD6A5;
-    padding: 10px 20px;
-    margin: 10px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
 
-.choiceBtn:hover {
-    background-color: #FFB085;
-}
 
-#startGameButton,
-#newQuestionButton {
-    font-size: 24px;
-    padding: 10px 20px;
-    background-color: #FFDACD;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    display: block;
-    margin: auto;
-}
-
-#startGameButton:hover,
-#newQuestionButton:hover {
-    background-color: #FFC2B2;
-}
-
-#resultText {
-    color: green; /* Default color, will be changed by JavaScript */
-    text-align: center;
-}
-
-#resultImage {
-    width: 200px;
-    height: 200px;
-    text-align: center;
-}
-
-.correctChoice {
-    color: green;
-}
-
-.incorrectChoice {
-    color: red;
-}
-
-#playerAnswer,
-#actualAnswer {
-    text-align: center;
-}
